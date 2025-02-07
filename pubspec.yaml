@@ -17,6 +17,7 @@ dependencies:
   sqflite: ^2.4.1 #For local db
   provider: ^6.1.2 #For state management
   geolocator: ^13.0.2 #For location
+  geocoding: ^3.0.0 #Fetching lat long from city
   intl: ^0.20.2 #For data formatting
   connectivity_plus: ^6.1.2 #For internet connectivity checking
   flutter_launcher_icons: ^0.14.3 #For setting app icons

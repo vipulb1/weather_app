@@ -16,10 +16,29 @@ class WeatherWidget extends StatefulWidget {
 class _WeatherWidgetState extends State<WeatherWidget> {
   bool isCelsius = true;
 
+  //Convert temperature celsius to fahrenheit
   double convertTemperature(double temp) {
     return (temp * 9 / 5) + 32;
   }
 
+  //Get weather description based on temperature
+  String getDescription(double temperature) {
+    if (temperature <= 0) {
+      return "Weather is freezing cold";
+    } else if (temperature > 0 && temperature <= 10) {
+      return "Weather is very cold";
+    } else if (temperature > 10 && temperature <= 20) {
+      return "Weather is cool & pleasant";
+    } else if (temperature > 20 && temperature <= 30) {
+      return "Weather is warm & comfortable";
+    } else if (temperature > 30 && temperature <= 40) {
+      return "Weather is hot & sunny";
+    } else {
+      return "Weather is extremely hot!";
+    }
+  }
+
+  //Get weather icon based on temperature
   Icon getWeatherIcon(double temperature) {
     if (temperature >= 30) {
       return const Icon(
@@ -96,7 +115,9 @@ class _WeatherWidgetState extends State<WeatherWidget> {
               height: 4.0,
             ),
             Text(
-              widget.weather.description,
+              getDescription(
+                widget.weather.temperature,
+              ),
               style: const TextStyle(
                 fontSize: 12,
                 fontWeight: FontWeight.w500,

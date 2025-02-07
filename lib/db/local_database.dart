@@ -8,7 +8,6 @@ class LocalDatabase {
   String idColumn = 'id';
   String locColumn = 'location';
   String tempColumn = 'temperature';
-  String descColumn = 'description';
 
   Future<Database> get database async {
     if (_database != null) {
@@ -23,7 +22,7 @@ class LocalDatabase {
     final path = join(await getDatabasesPath(), 'weather.db');
     return openDatabase(path, version: 1, onCreate: (db, version) {
       return db.execute(
-          'CREATE TABLE $tableName($idColumn INTEGER PRIMARY KEY AUTOINCREMENT,$locColumn TEXT,$tempColumn REAL,$descColumn TEXT)');
+          'CREATE TABLE $tableName($idColumn INTEGER PRIMARY KEY AUTOINCREMENT,$locColumn TEXT,$tempColumn REAL)');
     });
   }
 
@@ -34,7 +33,6 @@ class LocalDatabase {
       {
         locColumn: weather.location,
         tempColumn: weather.temperature,
-        descColumn: weather.description,
       },
       conflictAlgorithm: ConflictAlgorithm.replace, //Update if value exist
     );
@@ -67,7 +65,6 @@ class LocalDatabase {
         return Weather(
           location: weatherData[index][locColumn],
           temperature: weatherData[index][tempColumn],
-          description: weatherData[index][descColumn],
         );
       },
     );

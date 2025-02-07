@@ -1,6 +1,8 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:geocoding/geocoding.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:weather_app/db/local_database.dart';
 import 'package:weather_app/models/weather_model.dart';
 import 'package:http/http.dart' as http;
@@ -40,18 +42,40 @@ class WeatherService extends ChangeNotifier {
     }
 
     isOffline = false;
-    const String apiKey = '';
-    final url = Uri.parse('https://api.api-ninjas.com/v1/weather?city=$location');
+    double? latitude = 0;
+    double? longitude = 0;
+
+    //Convert city name to latitude & longitude
+    String cityName = location.trim();
+    if (cityName.isEmpty) return;
+
+    try {
+      List<Location> locations = await locationFromAddress(cityName);
+      if (locations.isNotEmpty) {
+        Location location = locations.first;
+        latitude = location.latitude;
+        longitude = location.longitude;
+
+      } else {
+        debugPrint('No location found for this city.');
+      }
+    } catch (e) {
+      debugPrint('Error getting coordinates: $e');
+    }
+
+    const String apiKey = '4AhPsp29ztgnwLfeBMkUSg==J3P8DVLzBHvXhIQy';
+    final url = Uri.parse(
+        'https://api.api-ninjas.com/v1/weather?lat=$latitude&lon=$longitude');
 
     try {
       final response = await http.get(
         url,
-        headers: {'X-Api-Key' :  apiKey},
+        headers: {'X-Api-Key': apiKey},
       );
 
       if (response.statusCode == 200) {
         final data = jsonDecode(response.body);
-        currentWeather = Weather.fromJson(data);
+        currentWeather = Weather.fromJson(data,location);
 
         //Store data in local db
         if (currentWeather != null) {
@@ -60,7 +84,7 @@ class WeatherService extends ChangeNotifier {
       } else {
         throw Exception('Failed to fetch live weather data');
       }
-    } catch(exception) {
+    } catch (exception) {
       debugPrint('API Error => $exception');
     }
 

@@ -1,20 +1,17 @@
 class Weather {
   final String location;
   final double temperature;
-  final String description;
 
   Weather({
     required this.location,
     required this.temperature,
-    required this.description,
   });
 
   // Convert JSON response to Weather object
-  factory Weather.fromJson(Map<String, dynamic> json) {
+  factory Weather.fromJson(Map<String, dynamic> json, String location) {
     return Weather(
-      location: json['location'],
-      temperature: json['temperature'],
-      description: json['description'],
+      location: location,
+      temperature: json['temp'],
     );
   }
 
@@ -23,7 +20,6 @@ class Weather {
     return {
       'location': location,
       'temperature': temperature,
-      'description': description,
     };
   }
 
@@ -32,7 +28,6 @@ class Weather {
     return Weather(
       location: map['location'] ?? '',
       temperature: map['temperature'] ?? '',
-      description: map['description'] ?? ''
     );
   }
 }
