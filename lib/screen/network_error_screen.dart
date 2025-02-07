@@ -7,6 +7,17 @@ class NetworkErrorScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
+      appBar: AppBar(
+        title: const Text(
+          'Weather App',
+          style: TextStyle(
+            fontSize: 20,
+            fontWeight: FontWeight.w700,
+            color: Colors.white,
+          ),
+        ),
+        backgroundColor: Colors.amber,
+      ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -41,12 +52,16 @@ class NetworkErrorScreen extends StatelessWidget {
               onPressed: () {
                 Navigator.pop(context);
               },
-              style: const ButtonStyle(alignment: Alignment.center),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.amber,
+                alignment: Alignment.center,
+              ),
               child: const Text(
                 'Retry',
                 style: TextStyle(
-                  fontSize: 12.0,
+                  fontSize: 12,
                   fontWeight: FontWeight.w600,
+                  color: Colors.white,
                 ),
               ),
             ),

@@ -19,19 +19,22 @@ class MyApp extends StatelessWidget {
         title: 'Weather App',
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
-          primarySwatch: Colors.amber,
+          primaryColor: Colors.amber,
         ),
-        darkTheme: ThemeData(primarySwatch: Colors.yellow),
+        darkTheme: ThemeData(
+          primaryColor: Colors.yellow,
+        ),
         initialRoute: '/',
         onGenerateRoute: (settings) {
           switch (settings.name) {
             case '/':
-              MaterialPageRoute(builder: (context) => const HomeScreen());
+              return MaterialPageRoute(
+                  builder: (context) => const HomeScreen());
             case '/network_error':
-              MaterialPageRoute(
+              return MaterialPageRoute(
                   builder: (context) => const NetworkErrorScreen());
             default:
-              MaterialPageRoute(
+              return MaterialPageRoute(
                 builder: (context) => const Scaffold(
                   body: Center(
                     child: Text(

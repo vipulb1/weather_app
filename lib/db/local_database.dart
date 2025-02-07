@@ -22,7 +22,7 @@ class LocalDatabase {
     final path = join(await getDatabasesPath(), 'weather.db');
     return openDatabase(path, version: 1, onCreate: (db, version) {
       return db.execute(
-          'CREATE TABLE $tableName($idColumn INTEGER PRIMARY KEY AUTOINCREMENT,$locColumn TEXT,$tempColumn REAL)');
+          'CREATE TABLE $tableName($idColumn INTEGER PRIMARY KEY AUTOINCREMENT,$locColumn TEXT,$tempColumn INTEGER)');
     });
   }
 

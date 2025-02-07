@@ -1,6 +1,6 @@
 class Weather {
   final String location;
-  final double temperature;
+  final int temperature;
 
   Weather({
     required this.location,

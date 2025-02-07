@@ -17,12 +17,12 @@ class _WeatherWidgetState extends State<WeatherWidget> {
   bool isCelsius = true;
 
   //Convert temperature celsius to fahrenheit
-  double convertTemperature(double temp) {
+  double convertTemperature(int temp) {
     return (temp * 9 / 5) + 32;
   }
 
   //Get weather description based on temperature
-  String getDescription(double temperature) {
+  String getDescription(int temperature) {
     if (temperature <= 0) {
       return "Weather is freezing cold";
     } else if (temperature > 0 && temperature <= 10) {
@@ -39,7 +39,7 @@ class _WeatherWidgetState extends State<WeatherWidget> {
   }
 
   //Get weather icon based on temperature
-  Icon getWeatherIcon(double temperature) {
+  Icon getWeatherIcon(int temperature) {
     if (temperature >= 30) {
       return const Icon(
         Icons.wb_sunny,
@@ -50,7 +50,7 @@ class _WeatherWidgetState extends State<WeatherWidget> {
       return const Icon(
         Icons.cloud,
         size: 50,
-        color: Colors.white,
+        color: Colors.black87,
       ); // Mild Weather ☁️
     } else if (temperature >= 10) {
       return const Icon(
@@ -70,13 +70,16 @@ class _WeatherWidgetState extends State<WeatherWidget> {
   @override
   Widget build(BuildContext context) {
     double displayedTemp = isCelsius
-        ? widget.weather.temperature
+        ? double.parse('${widget.weather.temperature}')
         : convertTemperature(widget.weather.temperature);
     return Card(
       elevation: 2,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(
           8.0,
+        ),
+        side: const BorderSide(
+          color: Colors.black54,
         ),
       ),
       shadowColor: Colors.black12,
@@ -132,12 +135,16 @@ class _WeatherWidgetState extends State<WeatherWidget> {
                   isCelsius = !isCelsius;
                 });
               },
-              style: const ButtonStyle(alignment: Alignment.center),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.amber,
+                alignment: Alignment.center,
+              ),
               child: Text(
-                'Convert to ${isCelsius ? 'Celsius' : ''}',
+                'Convert to ${isCelsius ? 'Celsius' : 'Fahrenheit'}',
                 style: const TextStyle(
-                  fontSize: 12.0,
+                  fontSize: 12,
                   fontWeight: FontWeight.w600,
+                  color: Colors.white,
                 ),
               ),
             ),

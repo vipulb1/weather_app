@@ -29,11 +29,12 @@ class _HomeScreenState extends State<HomeScreen> {
         title: const Text(
           'Weather App',
           style: TextStyle(
-            fontSize: 14,
+            fontSize: 20,
             fontWeight: FontWeight.w700,
             color: Colors.white,
           ),
         ),
+        backgroundColor: Colors.amber,
       ),
       body: Container(
         padding: const EdgeInsets.all(16.0),
@@ -45,11 +46,19 @@ class _HomeScreenState extends State<HomeScreen> {
               controller: _locationController,
               decoration: InputDecoration(
                 border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8.0),
+                    borderSide: const BorderSide(
+                      color: Colors.black54,
+                    )),
+                focusedBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(8.0),
+                  borderSide: const BorderSide(
+                    color: Colors.amber,
+                  ),
                 ),
                 focusColor: Colors.amber,
                 labelText: 'Enter city name',
-                prefixIcon: GestureDetector(
+                suffixIcon: GestureDetector(
                   onTap: () {
                     weatherService.fetchWeather(
                       _locationController.text.trim(),
@@ -74,8 +83,17 @@ class _HomeScreenState extends State<HomeScreen> {
               onPressed: () {
                 weatherService.fetchWeatherService();
               },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.amber,
+                alignment: Alignment.center,
+              ),
               child: const Text(
                 'Fetch weather data',
+                style: TextStyle(
+                  fontSize: 12,
+                  fontWeight: FontWeight.w600,
+                  color: Colors.white,
+                ),
               ),
             ),
             const SizedBox(

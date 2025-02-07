@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
@@ -33,7 +34,7 @@ class WeatherService extends ChangeNotifier {
 
     bool hasInternet = await NetworkService().hasNetwork();
 
-    if (hasInternet) {
+    if (!hasInternet) {
       isLoading = false;
       isOffline = true;
       //Fetch data from local db
@@ -85,7 +86,13 @@ class WeatherService extends ChangeNotifier {
         throw Exception('Failed to fetch live weather data');
       }
     } catch (exception) {
-      debugPrint('API Error => $exception');
+      if (exception is http.ClientException) {
+        debugPrint('Network error: Failed to load data');
+      } else if (exception is SocketException) {
+        debugPrint('SocketException: No internet or server unreachable');
+      } else {
+        debugPrint('API Error => $exception');
+      }
     }
 
     isLoading = false;
@@ -98,7 +105,7 @@ class WeatherService extends ChangeNotifier {
 
     bool hasInternet = await NetworkService().hasNetwork();
 
-    if (hasInternet) {
+    if (!hasInternet) {
       isLoading = false;
       isOffline = true;
       notifyListeners();
@@ -141,7 +148,13 @@ class WeatherService extends ChangeNotifier {
         throw Exception('Failed to fetch live weather data');
       }
     } catch (exception) {
-      debugPrint('API Error => $exception');
+      if (exception is http.ClientException) {
+        debugPrint('Network error: Failed to load data');
+      } else if (exception is SocketException) {
+        debugPrint('SocketException: No internet or server unreachable');
+      } else {
+        debugPrint('API Error => $exception');
+      }
     }
 
     isLoading = false;
