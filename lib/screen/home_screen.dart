@@ -49,6 +49,16 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 focusColor: Colors.amber,
                 labelText: 'Enter city name',
+                prefixIcon: GestureDetector(
+                  onTap: () {
+                    weatherService.fetchWeather(
+                      _locationController.text.trim(),
+                    );
+                  },
+                  child: const Icon(
+                    Icons.search,
+                  ),
+                ),
               ),
               inputFormatters: [
                 FilteringTextInputFormatter.allow(RegExp('[a-zA-Z ]')),
@@ -56,6 +66,17 @@ class _HomeScreenState extends State<HomeScreen> {
               onSubmitted: (String location) {
                 weatherService.fetchWeather(location);
               },
+            ),
+            const SizedBox(
+              height: 10.0,
+            ),
+            ElevatedButton(
+              onPressed: () {
+                weatherService.fetchWeatherService();
+              },
+              child: const Text(
+                'Fetch weather data',
+              ),
             ),
             const SizedBox(
               height: 10.0,
